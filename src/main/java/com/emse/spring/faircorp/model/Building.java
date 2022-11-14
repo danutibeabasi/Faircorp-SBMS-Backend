@@ -15,7 +15,7 @@ public class Building {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building", cascade = CascadeType.REMOVE)
     private Set<Room> rooms;
 
     public Building() {

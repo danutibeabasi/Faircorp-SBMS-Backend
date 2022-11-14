@@ -22,10 +22,10 @@ public class Room {
 
     private Double targetTemperature;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room" , cascade = CascadeType.REMOVE)
     private List<Heater> heaters;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
     private List<Window> windows;
 
     @ManyToOne

@@ -84,28 +84,6 @@ public class RoomController {
         return new RoomDto(room);
     }
 
-//    @PostMapping // (8)
-//    public RoomDto create(@RequestBody RoomDto dto) {
-//        // RoomDto must always contain the room building
-//        Room room = null;
-//        // On creation id is not defined
-//        if (dto.getId() == null) {
-//            room = roomDao.getReferenceById(dto.getId());
-//            room.setName(dto.getName());
-//            room.setFloor(dto.getFloor());
-//            room.setCurrentTemperature(dto.getCurrentTemperature());
-//            room.setTargetTemperature(dto.getTargetTemperature());
-//            return new RoomDto(roomDao.save(room));
-//        } else {
-//            room = roomDao.getReferenceById(dto.getId());
-//            room.setName(dto.getName());
-//            room.setFloor(dto.getFloor());
-//            room.setCurrentTemperature(dto.getCurrentTemperature());
-//            room.setTargetTemperature(dto.getTargetTemperature());
-//            return new RoomDto(roomDao.save(room));
-//        }
-//    }
-
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         windowDao.deleteAllByRoom(id);
