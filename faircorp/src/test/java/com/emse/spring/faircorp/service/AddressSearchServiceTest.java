@@ -31,7 +31,7 @@ class AddressSearchServiceTest {
     private MockRestServiceServer server;
 
     @Test
-    void shouldFindAdresses() throws JsonProcessingException {
+    void shouldFindAddresses() throws JsonProcessingException {
         // Arrange
         ApiGouvResponseDto expectedResponse = simulateApiResponse();
 
@@ -46,22 +46,22 @@ class AddressSearchServiceTest {
                 .expect(requestTo(expectedUrl))
                 .andRespond(withSuccess(objectMapper.writeValueAsString(expectedResponse), MediaType.APPLICATION_JSON));
         // Act
-        List<ApiGouvAdressDto> adresses = this.service.findAddress(List.of("cours", "fauriel"));
+        List<ApiGouvAdressDto> addresses = this.service.findAddress(List.of("cours", "fauriel"));
 
         // Assert
         Assertions
-                .assertThat(adresses)
+                .assertThat(addresses)
                 .hasSize(1)
                 .extracting(ApiGouvAdressDto::getCity)
                 .contains("Saint Etienne");
     }
 
     private ApiGouvResponseDto simulateApiResponse() {
-        ApiGouvAdressDto expectedAdress = new ApiGouvAdressDto();
-        expectedAdress.setCity("Saint Etienne");
+        ApiGouvAdressDto expectedAddress = new ApiGouvAdressDto();
+        expectedAddress.setCity("Saint Etienne");
 
         ApiGouvFeatureDto expectedFeature = new ApiGouvFeatureDto();
-        expectedFeature.setProperties(expectedAdress);
+        expectedFeature.setProperties(expectedAddress);
 
         ApiGouvResponseDto expectedResponse = new ApiGouvResponseDto();
         expectedResponse.setFeatures(List.of(expectedFeature));

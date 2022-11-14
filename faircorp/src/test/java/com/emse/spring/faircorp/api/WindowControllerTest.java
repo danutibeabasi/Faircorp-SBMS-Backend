@@ -1,6 +1,5 @@
 package com.emse.spring.faircorp.api;
 
-
 import com.emse.spring.faircorp.dao.RoomDao;
 import com.emse.spring.faircorp.dao.WindowDao;
 import com.emse.spring.faircorp.dto.WindowDto;
@@ -13,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -42,6 +42,7 @@ class WindowControllerTest {
     private RoomDao roomDao;
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldLoadWindows() throws Exception {
         given(windowDao.findAll()).willReturn(List.of(
                 createWindow("window 1"),
@@ -56,6 +57,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldLoadAWindowAndReturnNullIfNotFound() throws Exception {
         given(windowDao.findById(999L)).willReturn(Optional.empty());
 
@@ -67,6 +69,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldLoadAWindow() throws Exception {
         given(windowDao.findById(999L)).willReturn(Optional.of(createWindow("window 1")));
 
@@ -78,6 +81,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldSwitchWindow() throws Exception {
         Window expectedWindow = createWindow("window 1");
         Assertions.assertThat(expectedWindow.getWindowStatus()).isEqualTo(WindowStatus.OPEN);
@@ -92,6 +96,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldUpdateWindow() throws Exception {
         Window expectedWindow = createWindow("window 1");
         expectedWindow.setId(1L);
@@ -108,6 +113,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldCreateWindow() throws Exception {
         Window expectedWindow = createWindow("window 1");
         expectedWindow.setId(null);
@@ -123,6 +129,7 @@ class WindowControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldDeleteWindow() throws Exception {
         mockMvc.perform(delete("/api/windows/999"))
                 .andExpect(status().isOk());

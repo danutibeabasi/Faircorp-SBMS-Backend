@@ -1,6 +1,8 @@
 package com.emse.spring.faircorp.model;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -50,6 +52,12 @@ public class Building {
 
     public Collection<Room> getRooms() {
         return rooms;
+    }
+
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = (Set<Room>) rooms;
+
     }
 }
 

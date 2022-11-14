@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
 public class AddressSearchService {
     private final RestTemplate restTemplate;
     public AddressSearchService(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.rootUri("https://api-adresse.data.gouv.fr/").build();
+        //"URI is must be absolute",
+        this.restTemplate = restTemplateBuilder.rootUri("https://api-adresse.data.gouv.fr").build();
+        //and the test is failing with the following error:
     }
 
     public List<ApiGouvAdressDto> findAddress(List<String> keys) {
