@@ -5,6 +5,7 @@ import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
 import com.emse.spring.faircorp.dao.WindowDao;
 import com.emse.spring.faircorp.dto.RoomDto;
+import com.emse.spring.faircorp.dto.WindowDto;
 import com.emse.spring.faircorp.model.HeaterStatus;
 import com.emse.spring.faircorp.model.Room;
 import com.emse.spring.faircorp.model.WindowStatus;
@@ -54,6 +55,13 @@ public class RoomController {
     public RoomDto findById(@PathVariable Long id) {
         return roomDao.findById(id).map(RoomDto::new).orElse(null); // (7)
     }
+
+    //gett all windows in a room
+    @GetMapping(path = "/{id}/windows")
+    public List<WindowDto> findWindows(@PathVariable Long id) {
+        return roomDao.findById(id).map(room -> room.getWindows().stream().map(WindowDto::new).collect(Collectors.toList())).orElse(null);
+    }
+
 
     @PutMapping(path = "/{id}/switchWindow")
     public void switchWindows(@PathVariable Long id) {
