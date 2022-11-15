@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class HelloController {
 
-
+    //get hello + name
     @GetMapping("/{name}")
     public MessageDto welcome(@PathVariable String name) {
         return new MessageDto("Hello " + name);

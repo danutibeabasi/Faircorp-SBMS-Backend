@@ -30,17 +30,19 @@ public class HeaterController {
     }
 
 
-
+    //get all heaters
     @GetMapping // (5)
     public List<HeaterDto> findAll() {
         return heaterDao.findAll().stream().map(HeaterDto::new).collect(Collectors.toList());  // (6)
     }
 
+    //get a heater by id
     @GetMapping(path = "/{id}")
     public HeaterDto findById(@PathVariable Long id) {
         return heaterDao.findById(id).map(HeaterDto::new).orElse(null); // (7)
     }
 
+    //Update a heaterstatus by id
     @PutMapping(path = "/{id}/switch")
     public HeaterDto switchStatus(@PathVariable Long id) {
         Heater heater = heaterDao.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -48,6 +50,7 @@ public class HeaterController {
         return new HeaterDto(heater);
     }
 
+    //Create a heater in a room
     @PostMapping
     public HeaterDto create(@RequestBody HeaterDto dto) {
         // HeaterDto must always contain the heater room
@@ -68,6 +71,7 @@ public class HeaterController {
         return new HeaterDto(heater);
     }
 
+    //Delete a heater by id
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         heaterDao.deleteById(id);

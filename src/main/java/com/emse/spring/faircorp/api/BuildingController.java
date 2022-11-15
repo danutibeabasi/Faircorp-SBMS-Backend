@@ -40,6 +40,7 @@ public class BuildingController {
         this.buildingDao = buildingDao;
     }
 
+    //get all buildings
     @GetMapping
     public List<BuildingDto> findAll() {
         return buildingDao.findAll()
@@ -48,16 +49,20 @@ public class BuildingController {
                 .collect(Collectors.toList());
     }
 
+    //get a building by id
     @GetMapping(path = "/{id}")
     public BuildingDto findById(@PathVariable Long id) {
         return buildingDao.findById(id).map(building -> new BuildingDto(building)).orElse(null);
     }
 
+    //get all rooms in a building
     @GetMapping(path = "/{id}/rooms")
     public List<RoomDto> findRooms(@PathVariable Long id) {
-        return buildingDao.findById(id).map(building -> building.getRooms().stream().map(RoomDto::new).collect(Collectors.toList())).orElse(null);
+        return buildingDao.findById(id).map(building -> building.getRooms().stream().map(RoomDto::new)
+                .collect(Collectors.toList())).orElse(null);
     }
 
+    //Update HeaterStatus of a heater in a room in a building
     @PutMapping(path = "/{id}/switchHeaters")
     public List<Heater>  switchHeaters(@PathVariable Long id) {
         List<Heater> TotalHeaters = new LinkedList<Heater>();;
@@ -73,6 +78,7 @@ public class BuildingController {
         return TotalHeaters;
     }
 
+    //Update WindowStatus of a window in a room in a building
     @PutMapping(path = "/{id}/switchWindows")
     public List<Window>  switchWindows(@PathVariable Long id) {
         List<Window> TotalWindows = new LinkedList<Window>();;
@@ -87,6 +93,7 @@ public class BuildingController {
         return TotalWindows;
     }
 
+    //Create a new building
     @PostMapping
     public BuildingDto create(@RequestBody BuildingDto dto) {
         Building building = null;
@@ -104,6 +111,7 @@ public class BuildingController {
     }
 
 
+    //Delete a building
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         List<Room> roomList =  roomDao.findByBuildingId(id);

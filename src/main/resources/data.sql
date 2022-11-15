@@ -21,6 +21,6 @@ INSERT INTO ROLE(id, name) VALUES(-10, 'ADMIN');
 INSERT INTO ROLE(id, name) VALUES(-9, 'USER');
 
 
-INSERT INTO RUSER(id, name, username, password, role_id) VALUES(-10, 'Admin', 'admin', 'admin', -10);
-INSERT INTO RUSER(id, name, username, password, role_id) VALUES(-9, 'User', 'user', 'user', -9);
+INSERT INTO RUSER(id, name, username, password, role_id) VALUES(-10, 'Admin', 'admin', 'password', -10);
+INSERT INTO RUSER(id, name, username, password, role_id) VALUES(-9, 'User', 'user', 'password', -9);
 

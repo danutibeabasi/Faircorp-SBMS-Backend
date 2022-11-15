@@ -18,6 +18,7 @@ public class AddressController {
         this.address = address;
     }
 
+    //get all addresses
     @GetMapping
     public List<ApiGouvAdressDto> findAddress(@RequestParam List<String> keys){
         return address.findAddress(keys);

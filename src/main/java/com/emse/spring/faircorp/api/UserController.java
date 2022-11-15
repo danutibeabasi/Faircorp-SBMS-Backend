@@ -20,25 +20,31 @@ public class UserController {
     }
 
 
+    //get all users
     @GetMapping  // (1)
     public ResponseEntity<List<User>> findUsers() {
         return ResponseEntity.ok().body(userDaoCustom.getUsers());
     }
 
+    //get a user by Usernmae
     @GetMapping(path = "/{username}")
     public ResponseEntity<User> findUser(@PathVariable String username) {
         return ResponseEntity.ok().body(userDaoCustom.getUser(username));
     }
 
-    @PostMapping("/api/user/save")
+    //Save a user
+    @PostMapping("/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userDaoCustom.saveUser(user));
     }
-    @PostMapping("/api/user/saverole")
+    //Save a user with a role
+    @PostMapping("/saverole")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         return ResponseEntity.ok().body(userDaoCustom.saveRole(role));
     }
-    @PostMapping("/api/user/addrole")
+
+    //Assign a role to a user
+    @PostMapping("/addrole")
     public void addRoleToUser(@RequestBody addRoleToUserForm form) {
         userDaoCustom.addRoleToUser(form.getUsername(), form.getRoleName());
     }

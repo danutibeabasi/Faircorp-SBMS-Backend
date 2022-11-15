@@ -29,17 +29,19 @@ public class WindowController {
         this.roomDao = roomDao;
     }
 
+    //get all windows
     @GetMapping // (5)
     public List<WindowDto> findAll() {
         return windowDao.findAll().stream().map(WindowDto::new).collect(Collectors.toList());  // (6)
     }
 
+    //get a window by id
     @GetMapping(path = "/{id}")
     public WindowDto findById(@PathVariable Long id) {
         return windowDao.findById(id).map(WindowDto::new).orElse(null); // (7)
     }
 
-
+    //Update a windowstatus
     @PutMapping(path = "/{id}/switch")
     public WindowDto switchStatus(@PathVariable Long id) {
         Window window = windowDao.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -47,6 +49,7 @@ public class WindowController {
         return new WindowDto(window);
     }
 
+    //Create a window
     @PostMapping // (8)
     public WindowDto create(@RequestBody WindowDto dto) {
         // WindowDto must always contain the window room
@@ -66,6 +69,7 @@ public class WindowController {
         return new WindowDto(window);
     }
 
+    //Delete a window
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         windowDao.deleteById(id);

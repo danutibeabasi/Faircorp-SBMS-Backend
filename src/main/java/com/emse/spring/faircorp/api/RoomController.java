@@ -45,34 +45,37 @@ public class RoomController {
         this.buildingDao = buildingDao;
     }
 
+    //get all rooms
     @GetMapping // (5)
     public List<RoomDto> findAll() {
         return roomDao.findAll().stream().map(RoomDto::new).collect(Collectors.toList());  // (6)
     }
 
-
+     //get a room by id
     @GetMapping(path = "/{id}")
     public RoomDto findById(@PathVariable Long id) {
         return roomDao.findById(id).map(RoomDto::new).orElse(null); // (7)
     }
 
-    //gett all windows in a room
+    //get all windows in a room
     @GetMapping(path = "/{id}/windows")
     public List<WindowDto> findWindows(@PathVariable Long id) {
         return roomDao.findById(id).map(room -> room.getWindows().stream().map(WindowDto::new).collect(Collectors.toList())).orElse(null);
     }
 
-
+    //Update the status of a window
     @PutMapping(path = "/{id}/switchWindow")
     public void switchWindows(@PathVariable Long id) {
         roomDao.findById(id).map(Room::getWindows).orElse(null).stream().forEach(w -> w.setWindowStatus(w.getWindowStatus() == WindowStatus.OPEN ? WindowStatus.CLOSED : WindowStatus.OPEN));
     }
 
+    //Update HeaterStatus of a heater in a room
     @PutMapping(path = "/{id}/switchHeaters")
     public void switchHeaters(@PathVariable Long id) {
         roomDao.findById(id).map(Room::getHeaters).orElse(null).stream().forEach(h -> h.setHeaterStatus(h.getHeaterStatus() ==  HeaterStatus.ON ? HeaterStatus.OFF : HeaterStatus.ON));
     }
 
+    //Create a room
     @PostMapping
     public RoomDto create(@RequestBody RoomDto dto) {
         Room room = null;
@@ -92,6 +95,7 @@ public class RoomController {
         return new RoomDto(room);
     }
 
+    //Delete a room by id and all its windows and heaters
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         windowDao.deleteAllByRoom(id);
