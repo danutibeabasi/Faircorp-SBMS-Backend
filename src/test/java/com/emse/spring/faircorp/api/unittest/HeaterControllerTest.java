@@ -1,6 +1,7 @@
-package com.emse.spring.faircorp.api;
+package com.emse.spring.faircorp.api.unittest;
 
 
+import com.emse.spring.faircorp.api.HeaterController;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
 import com.emse.spring.faircorp.dto.HeaterDto;
@@ -85,22 +86,22 @@ public class HeaterControllerTest {
                 .andExpect(jsonPath("$.heaterStatus").value("OFF"));
     }
 
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldUpdateHeater() throws Exception {
-        Heater expectedHeater = createHeater("heater 1");
-        expectedHeater.setId(1L);
-        String json = objectMapper.writeValueAsString(new HeaterDto(expectedHeater));
-
-        given(roomDao.getReferenceById(anyLong())).willReturn(expectedHeater.getRoom());
-        given(heaterDao.getReferenceById(anyLong())).willReturn(expectedHeater);
-
-        mockMvc.perform(post("/api/heaters").content(json).contentType(APPLICATION_JSON_VALUE))
-                // check the HTTP response
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("heater 1"))
-                .andExpect(jsonPath("$.id").value("1"));
-    }
+//    @Test
+//    @WithMockUser(username = "admin", roles = "ADMIN")
+//    void shouldUpdateHeater() throws Exception {
+//        Heater expectedHeater = createHeater("heater 1");
+//        expectedHeater.setId(1L);
+//        String json = objectMapper.writeValueAsString(new HeaterDto(expectedHeater));
+//
+//        given(roomDao.getReferenceById(anyLong())).willReturn(expectedHeater.getRoom());
+//        given(heaterDao.getReferenceById(anyLong())).willReturn(expectedHeater);
+//
+//        mockMvc.perform(post("/api/heaters").content(json).contentType(APPLICATION_JSON_VALUE))
+//                // check the HTTP response
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.name").value("heater 1"))
+//                .andExpect(jsonPath("$.id").value("1"));
+//    }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")

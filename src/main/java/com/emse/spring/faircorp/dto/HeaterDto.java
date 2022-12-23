@@ -12,7 +12,7 @@ public class HeaterDto {
     private HeaterStatus heaterStatus;
     private Long power;
 
-    public HeaterDto() {
+    public HeaterDto(Long id, String name, HeaterStatus off, Long power, Long aLong) {
     }
 
     public HeaterDto(Heater heater) {

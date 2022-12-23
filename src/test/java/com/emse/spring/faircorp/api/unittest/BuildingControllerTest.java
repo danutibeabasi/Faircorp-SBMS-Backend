@@ -1,5 +1,6 @@
-package com.emse.spring.faircorp.api;
+package com.emse.spring.faircorp.api.unittest;
 
+import com.emse.spring.faircorp.api.BuildingController;
 import com.emse.spring.faircorp.dao.BuildingDao;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
