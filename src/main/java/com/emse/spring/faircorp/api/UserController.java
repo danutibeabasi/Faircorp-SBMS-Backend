@@ -19,38 +19,61 @@ public class UserController {
         this.userDaoCustom = userDaoCustom;
     }
 
-
-    //get all users
-    @GetMapping  // (1)
+    /**
+     * Returns a list of all users.
+     *
+     * @return a list of all users
+     */
+    @GetMapping
     public ResponseEntity<List<User>> findUsers() {
         return ResponseEntity.ok().body(userDaoCustom.getUsers());
     }
 
-    //get a user by Usernmae
+    /**
+     * Returns a user with the given username.
+     *
+     * @param username the username of the user to be retrieved
+     * @return the user with the given username
+     */
     @GetMapping(path = "/{username}")
     public ResponseEntity<User> findUser(@PathVariable String username) {
         return ResponseEntity.ok().body(userDaoCustom.getUser(username));
     }
 
-    //Save a user
+    /**
+     * Saves a new user.
+     *
+     * @param user the user to be saved
+     * @return the saved user
+     */
     @PostMapping("/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userDaoCustom.saveUser(user));
     }
-    //Save a user with a role
+
+    /**
+     * Saves a new role.
+     *
+     * @param role the role to be saved
+     * @return the saved role
+     */
     @PostMapping("/saverole")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         return ResponseEntity.ok().body(userDaoCustom.saveRole(role));
     }
 
-    //Assign a role to a user
+    /**
+     * Assigns a role to a user.
+     *
+     * @param form the form containing the username and role name
+     */
     @PostMapping("/addrole")
     public void addRoleToUser(@RequestBody addRoleToUserForm form) {
         userDaoCustom.addRoleToUser(form.getUsername(), form.getRoleName());
     }
 
-
 }
+
 
 class addRoleToUserForm {
     private String username;
