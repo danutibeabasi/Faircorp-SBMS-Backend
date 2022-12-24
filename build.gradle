@@ -49,13 +49,14 @@ tasks.named('test') {
 }
 
 // Declare a custom test task that runs the unit tests
-// only if there are uncommitted changes in the codebase
-task testAll(type: Test) {
+// only if there are committed changes in the codebase
+task unitTest(type: Test) {
+	useJUnitPlatform()
 	onlyIf {
-		def git = org.ajoberstar.grgit.Grgit.open()
-		!git.status().modified.isEmpty()
+		def status = "git status --porcelain".execute().text
+		status.contains("src/main/java")
 	}
 }
 
 // Make the test task a dependency of the build task
-build.dependsOn testAll
+build.dependsOn unitTest
