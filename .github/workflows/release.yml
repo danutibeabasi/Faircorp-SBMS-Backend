@@ -37,3 +37,13 @@ jobs:
           asset_path: path/to/artifact.zip
           asset_name: artifact.zip
           asset_content_type: application/zip
+      - name: Upload documentation
+        if: success()
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: path/to/documentation.zip
+          asset_name: documentation.zip
+          asset_content_type: application/zip
