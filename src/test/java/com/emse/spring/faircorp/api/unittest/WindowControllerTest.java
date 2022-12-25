@@ -103,7 +103,7 @@ class WindowControllerTest {
         expectedWindow.setId(1L);
         String json = objectMapper.writeValueAsString(new WindowDto(expectedWindow));
 
-        given(roomDao.getReferenceById(anyLong())).willReturn(expectedWindow.getRoom_window());
+        given(roomDao.getReferenceById(anyLong())).willReturn(expectedWindow.getRoom());
         given(windowDao.getReferenceById(anyLong())).willReturn(expectedWindow);
 
         mockMvc.perform(post("/api/windows").content(json).contentType(APPLICATION_JSON_VALUE))
@@ -120,7 +120,7 @@ class WindowControllerTest {
         expectedWindow.setId(null);
         String json = objectMapper.writeValueAsString(new WindowDto(expectedWindow));
 
-        given(roomDao.getReferenceById(anyLong())).willReturn(expectedWindow.getRoom_window());
+        given(roomDao.getReferenceById(anyLong())).willReturn(expectedWindow.getRoom());
         given(windowDao.save(any())).willReturn(expectedWindow);
 
         mockMvc.perform(post("/api/windows").content(json).contentType(APPLICATION_JSON_VALUE))

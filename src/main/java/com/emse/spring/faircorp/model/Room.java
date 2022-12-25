@@ -92,6 +92,17 @@ public class Room {
         this.windows = windows;
     }
 
+
+    public Room(String name, Integer floor) {
+        this.name = name;
+        this.floor = floor;
+
+    }
+
+    public Room(){
+
+    }
+
     /**
      * Returns the unique identifier for the room.
      *
