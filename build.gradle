@@ -3,7 +3,13 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'com.github.spotbugs' version '4.4.0'
+	id 'checkstyle'
 }
+
+
+apply plugin: 'com.github.spotbugs'
+
 
 group = 'com.emse.spring'
 version = '0.0.1-SNAPSHOT'
@@ -16,6 +22,7 @@ repositories {
 
 // Declare the dependencies for the project
 dependencies {
+
 	// Spring Boot dependencies for web services and data JPA
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -60,3 +67,40 @@ task unitTest(type: Test) {
 
 // Make the test task a dependency of the build task
 build.dependsOn unitTest
+
+// Configure the SpotBugs plugin
+spotbugs {
+	toolVersion = '4.4.0'
+	ignoreFailures = false
+	excludeFilter = file("$rootDir/config/spotbugs-exclude-filter.xml")
+}
+
+// Configure the Checkstyle plugin
+checkstyle {
+	toolVersion = '8.36'
+	configFile = file("$rootDir/config/checkstyle.xml")
+	ignoreFailures = false // set to true to ignore failures)
+}
+
+//
+tasks {
+	checkstyleMain {
+		ignoreFailures = false
+	}
+	checkstyleTest {
+		ignoreFailures = false
+	}
+}
+
+tasks {
+	spotbugsMain {
+		ignoreFailures = false
+	}
+	spotbugsTest {
+		ignoreFailures = false
+	}
+}
+
+check.dependsOn spotbugsMain, spotbugsTest, checkstyleMain, checkstyleTest
+
+
