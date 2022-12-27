@@ -1,121 +1,99 @@
-//package com.emse.spring.faircorp.api.integratedtest.unittest;
-//
-//import com.emse.spring.faircorp.dao.HeaterDao;
-//import com.emse.spring.faircorp.dao.RoomDao;
-//import com.emse.spring.faircorp.dto.HeaterDto;
-//import com.emse.spring.faircorp.model.Heater;
-//import com.emse.spring.faircorp.model.HeaterStatus;
-//import com.emse.spring.faircorp.model.Room;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import org.assertj.core.api.Assertions;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.security.test.context.support.WithMockUser;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.ResultMatcher;
-//
-//import javax.transaction.Transactional;
-//
-//import static org.hamcrest.Matchers.containsInAnyOrder;
-//import static org.springframework.http.MediaType.APPLICATION_JSON;
-//import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@Transactional
-//class HeaterControllerIntegrationTest {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//
-//    @Autowired
-//    private HeaterDao heaterDao;
-//
-//    @Autowired
-//    private RoomDao roomDao;
-//
-//    @Test
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void shouldLoadHeaters() throws Exception {
-//        // Set up test data in the database
-//        Heater heater1 = createHeater("heater 1");
-//        Heater heater2 = createHeater("heater 2");
-//        heaterDao.save(heater1);
-//        heaterDao.save(heater2);
-//
-//        // Send a GET request to the API endpoint to retrieve all heaters
-//        mockMvc.perform(get("/api/heaters").accept(APPLICATION_JSON))
-//                // Check the HTTP response status
-//                .andExpect(status().isOk())
-//                // Check the content of the response using JSON path
-//                .andExpect((ResultMatcher) jsonPath("[*].name").value(containsInAnyOrder("heater 1", "heater 2")));
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void shouldLoadAHeater() throws Exception {
-//        // Set up test data in the database
-//        Heater heater = createHeater("heater 1");
-//        heaterDao.save(heater);
-//
-//        // Send a GET request to the API endpoint to retrieve a specific heater
-//        mockMvc.perform(get("/api/heaters/{id}", heater.getId()).accept(APPLICATION_JSON))
-//                // Check the HTTP response status
-//                .andExpect(status().isOk())
-//                // Check the content of the response using JSON path
-//                .andExpect((ResultMatcher) jsonPath("$.name").value("heater 1"));
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void shouldSwitchHeater() throws Exception {
-//        // Set up test data in the database
-//        Heater heater = createHeater("heater 1");
-//        heaterDao.save(heater);
-//        Assertions.assertThat(heater.getHeaterStatus()).isEqualTo(HeaterStatus.ON);
-//
-//        // Create a HeaterDto object with the new status of the heater
-//        HeaterDto heaterDto =
-//                new HeaterDto(heater.getId(), heater.getName(), HeaterStatus.OFF, heater.getPower(), heater.getRoom().getId());
-//
-//        // Send a PUT request to the API endpoint to update the heater
-//        mockMvc.perform(put("/api/heaters/{id}", heater.getId())
-//                        .contentType(APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(heaterDto)))
-//                // Check the HTTP response status
-//                .andExpect(status().isOk())
-//                // Check the content of the response using JSON path
-//                .andExpect((ResultMatcher) jsonPath("$.name").value("heater 2"));
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void shouldDeleteAHeater() throws Exception {
-//        // Set up test data in the database
-//        Heater heater = createHeater("heater 1");
-//        heaterDao.save(heater);
-//
-//        // Send a DELETE request to the API endpoint to delete the heater
-//        mockMvc.perform(delete("/api/heaters/{id}", heater.getId()))
-//                // Check the HTTP response status
-//                .andExpect(status().isOk());
-//
-//        // Check that the heater was deleted from the database
-//        Assertions.assertThat(heaterDao.findById(heater.getId())).isEmpty();
-//    }
-//
-//    private Heater createHeater(String name) {
-//        Room room = new Room(name + " room", 1);
-//        Long power = 1000L;
-//        return new Heater(name, room, HeaterStatus.ON, power);
-//    }
-//
-//}
-//
+package com.emse.spring.faircorp.api.integratedtest.unittest;
+
+import com.emse.spring.faircorp.dao.HeaterDao;
+import com.emse.spring.faircorp.dao.RoomDao;
+import com.emse.spring.faircorp.model.Heater;
+import com.emse.spring.faircorp.model.Room;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+
+
+
+
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
+
+class HeaterControllerIntegrationTest {
+
+    @MockBean
+    private HeaterDao heaterDao;
+
+    @MockBean
+    private RoomDao roomDao;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    void shouldLoadHeaters() throws Exception {
+        // Set up test data in the database
+        Room room = createRoom("room 1");
+        roomDao.save(room);
+        Heater heater1 = createHeater("heater 1", room);
+        Heater heater2 = createHeater("heater 2", room);
+        heaterDao.save(heater1);
+        heaterDao.save(heater2);
+
+        String username = "admin";
+        String password = "password";
+
+        String auth = username + ":" + password;
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.US_ASCII));
+        String authHeader = "Basic " + new String(encodedAuth);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/heaters")
+                        .header("Authorization", authHeader)
+                        .accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].name", containsInAnyOrder("heater 1", "heater 2")))
+                .andReturn();
+
+        // Assert that the returned list of names contains the expected values
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> names = mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<String>>() {});
+        assertThat(names, containsInAnyOrder("heater 1", "heater 2"));
+
+    }
+
+
+    private Heater createHeater(String name, Room room) {
+        Heater heater = new Heater();
+        heater.setName(name);
+        heater.setRoom(room);
+        // Set any other required properties here
+        return heater;
+    }
+
+    private Room createRoom(String name) {
+        Room room = new Room();
+        room.setName(name);
+        // Set any other required properties here
+        return room;
+    }
+}

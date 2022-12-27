@@ -4,6 +4,7 @@ package com.emse.spring.faircorp.api.unittest;
 import com.emse.spring.faircorp.api.HeaterController;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
+import com.emse.spring.faircorp.dto.HeaterDto;
 import com.emse.spring.faircorp.model.Heater;
 import com.emse.spring.faircorp.model.HeaterStatus;
 import com.emse.spring.faircorp.model.Room;
@@ -20,11 +21,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
 @WebMvcTest(HeaterController.class)
@@ -82,21 +86,21 @@ public class HeaterControllerTest {
                 .andExpect(jsonPath("$.heaterStatus").value("OFF"));
     }
 
-//    @Test
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void shouldCreateHeater() throws Exception {
-//        Heater expectedHeater = createHeater("heater 1");
-//        expectedHeater.setId(null);
-//        String json = objectMapper.writeValueAsString(new HeaterDto(expectedHeater));
-//
-//        given(roomDao.getReferenceById(anyLong())).willReturn(expectedHeater.getRoom());
-//        given(heaterDao.save(any())).willReturn(expectedHeater);
-//
-//        mockMvc.perform(post("/api/heaters").content(json).contentType(APPLICATION_JSON_VALUE))
-//                // check the HTTP response
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name").value("heater 1"));
-//    }
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void shouldCreateHeater() throws Exception {
+        Heater expectedHeater = createHeater("heater 1");
+        expectedHeater.setId(null);
+        String json = objectMapper.writeValueAsString(new HeaterDto(expectedHeater));
+
+        given(roomDao.getReferenceById(anyLong())).willReturn(expectedHeater.getRoom());
+        given(heaterDao.save(any())).willReturn(expectedHeater);
+
+        mockMvc.perform(post("/api/heaters").content(json).contentType(APPLICATION_JSON_VALUE))
+                // check the HTTP response
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("heater 1"));
+    }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
