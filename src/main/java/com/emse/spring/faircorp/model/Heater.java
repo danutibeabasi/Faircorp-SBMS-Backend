@@ -51,8 +51,10 @@ public class Heater {
         this.power = power;
     }
 
-    public Heater(String s, int i, Room room) {
+    public Heater() {
+
     }
+
 
     /**
      * Returns the unique identifier for the heater.

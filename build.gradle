@@ -59,23 +59,15 @@ tasks.named('test') {
 
 }
 
-
+// execute only unit tests on every commit to github
 task unitTest(type: Test) {
 	useJUnitPlatform()
-	onlyIf {
-		def status = "git status --porcelain".execute().text
-		status.contains("src/main/java")
-	}
-}
-
-task integrationTest(type: Test) {
+	include '**/*Test.class'
 	exclude '**/*IntegrationTest.class'
-	exclude 'src/test/java/com/emse/spring/faircorp/IntegrationTest'
 }
-
 
 // Make the test task a dependency of the build task
-build.dependsOn unitTest, integrationTest
+build.dependsOn unitTest
 
 // Configure the SpotBugs plugin
 spotbugs {
