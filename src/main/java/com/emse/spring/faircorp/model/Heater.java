@@ -33,7 +33,7 @@ public class Heater {
     /**
      * Constructs a new Heater object with default values.
      */
-    public Heater() {
+    public Heater(String heater1, int i, HeaterStatus on, double v, Room room) {
     }
 
     /**

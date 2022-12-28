@@ -48,6 +48,9 @@ dependencies {
 	// Dependencies for Spring Security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	testImplementation("org.springframework.security:spring-security-test")
+
+	// Dependencies for Spring test
+	implementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 // Configure the test task to use JUnit Platform
@@ -66,8 +69,8 @@ task unitTest(type: Test) {
 }
 
 task integrationTest(type: Test) {
-	exclude '**/IntegrationTest*.class'
-	exclude '**/IntegrationTest**'
+	exclude '**/*IntegrationTest.class'
+	exclude 'src/test/java/com/emse/spring/faircorp/IntegrationTest'
 }
 
 
