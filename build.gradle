@@ -53,6 +53,7 @@ dependencies {
 // Configure the test task to use JUnit Platform
 tasks.named('test') {
 	useJUnitPlatform()
+
 }
 
 
@@ -66,12 +67,12 @@ task unitTest(type: Test) {
 
 task integrationTest(type: Test) {
 	exclude '**/IntegrationTest*.class'
-	exclude '**/integration/**'
+	exclude '**/IntegrationTest**'
 }
 
 
 // Make the test task a dependency of the build task
-build.dependsOn unitTest
+build.dependsOn unitTest, integrationTest
 
 // Configure the SpotBugs plugin
 spotbugs {
