@@ -56,7 +56,6 @@ dependencies {
 // Configure the test task to use JUnit Platform
 tasks.named('test') {
 	useJUnitPlatform()
-
 }
 
 // execute only unit tests on every commit to github

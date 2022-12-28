@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faircorp Documentation  </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="faircorp-global.css">
+    <link rel="stylesheet" href="faircorp-doc.css">
+  </head>
+  <body>
+    <div class="doc__bg"></div>
+    <nav class="header">
+      <h1 class="logo">Faircorp <span class="logo__thin">Doc</span></h1>
+      <ul class="menu">
+        <div class="menu__item toggle"><span></span></div>
+        <li class="menu__item"><a href="https://github.com/danutibeabasi/Faircorp-Web-Main" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
+      <aside class="doc__nav">
+        <ul>
+          <li class="js-btn selected">Get Started</li>
+          <li class="js-btn">Prerequisites</li>
+          <li class="js-btn">Authenticating</li>
+          <li class="js-btn">API Reference</li>
+          <li class="js-btn">Error Handling</li>
+          <li class="js-btn">Javadocs</li>
+          <li class="js-btn">Example</li>
+        </ul>
+      </aside>
+      <article class="doc__content">
+        <section class="js-section">
+          <h3 class="section__title">Get Started</h3>
+          <p>Welcome to the Faircorp Smart Building API documentation!
+
+            This API allows you to manage a smart building and its entities, including rooms, heaters, and windows. It also enables the administrator to manage users and assign roles and access to them in the system.
+          <br/><br/>
+            To use the API, you will need to make HTTP requests to the appropriate endpoints with the correct request type and any necessary parameters or body data. You can find a list of the available endpoints and their request types in the "API Reference" section below.</p>
+          <h3 class="section__title">Prerequisites</h3>
+          <div>
+            <p>To use the API, you will need the following::</p>
+            <ul>
+              <li>A computer with internet access</li>
+              <li>A REST client (such as Postman or Insomnia)</li>
+              <li>The API endpoint URL</li>
+            </ul>
+          </div> 
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Authenticating</h3>
+          <p>The API uses HTTP basic authentication to authenticate users. You will need to provide a valid username and password in the Authorization header of each request.</p>
+          <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">API Reference</h3>
+          <p>The API has the following endpoints:</p>
+          <table id="customers">
+            <tr>
+              <th>Buildings:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>GET /api/buildings</td>
+              <td>retrieves a list of all buildings</td>
+            </tr>
+            <tr>
+              <td>GET /api/buildings/{id}</td>
+              <td>retrieves information about a specific building</td>
+            </tr>
+            <tr>
+              <td>POST /api/buildings</td>
+              <td>creates a new building</td>
+            </tr>
+            <tr>
+              <td>PUT /api/buildings/{id}/switchHeaters</td>
+              <td>updates the status of heaters in a specific building</td>
+            </tr>
+            <tr>
+              <td>PUT /api/buildings/{id}/switchWindows</td>
+              <td>updates the status of windows in a specific building</td>
+            </tr>
+            <tr>
+              <td>DELETE /api/buildings/{id}</td>
+              <td>deletes a specific building</td>
+            </tr>
+          </table>  
+          <table id="customers">
+            <tr>
+              <th>Rooms:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>GET /api/rooms</td>
+              <td>retrieves a list of all buildings</td>
+            </tr>
+            <tr>
+              <td>GET /api/rooms/{id}</td>
+              <td>retrieves information about a specific building</td>
+            </tr>
+            <tr>
+              <td>POST /api/rooms</td>
+              <td>creates a new building</td>
+            </tr>
+            <tr>
+              <td>PUT /api/rooms/{id}/switchHeaters</td>
+              <td>updates the status of heaters in a specific room</td>
+            </tr>
+            <tr>
+              <td>PUT /api/rooms/{id}/switchWindows</td>
+              <td>updates the status of windows in a specific room</td>
+            </tr>
+            <tr>
+              <td>DELETE /api/buildings/{id}</td>
+              <td>deletes a specific building</td>
+            </tr>
+          </table>
+          <table id="customers">
+            <tr>
+              <th>Windows:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>GET /api/windows</td>
+              <td>retrieves a list of all windows</td>
+            </tr>
+            <tr>
+              <td>GET /api/windows/{id}</td>
+              <td>retrieves information about a specific window</td>
+            </tr>
+            <tr>
+              <td>POST /api/windows</td>
+              <td>creates a new window</td>
+            </tr>
+            <tr>
+              <td>PUT /api/windows/{id}/switch</td>
+              <td>updates the status of a specific window</td>
+            </tr>
+            <tr>
+              <td>DELETE /api/windows/{id}</td>
+              <td>deletes a specific window</td>
+            </tr>
+          </table>
+          <table id="customers">
+            <tr>
+              <th>Heaters:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>GET /api/heaters</td>
+              <td>retrieves a list of all heaters</td>
+            </tr>
+            <tr>
+              <td>GET /api/heaters/{id}</td>
+              <td>retrieves information about a specific heater</td>
+            </tr>
+            <tr>
+              <td>POST /api/heaters</td>
+              <td>creates a new heater</td>
+            </tr>
+            <tr>
+              <td>PUT /api/heaters/{id}/switch</td>
+              <td>updates the status of a specific heater</td>
+            </tr>
+            <tr>
+              <td>DELETE /api/heaters/{id}</td>
+              <td>updates the status of a specific heater</td>
+            </tr>
+          </table>
+          <table id="customers">
+            <tr>
+              <th>Users:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>GET /api/users</td>
+              <td>retrieves a list of all users</td>
+            </tr>
+            <tr>
+              <td>GET /api/users/{username}</td>
+              <td>retrieves information about a specific user</td>
+            </tr>
+            <tr>
+              <td>POST /api/users</td>
+              <td>creates a new user</td>
+            </tr>
+            <tr>
+              <td>DELETE /api/users/{username}</td>
+              <td>deletes a specific user</td>
+            </tr>
+          </table>                                 
+         <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Request and Response Format</h3>
+          <p>The API uses JSON format for both request and response bodies.</p>
+         </section>
+         <section class="js-section">
+          <h3 class="section__title">Error Handling</h3>
+          <p>If an error occurs, the API will return an HTTP status code indicating the type of error. The response body will also include an error message.</p>
+         </section>
+         <section class="js-section">
+          <h3 class="section__title">Javadocs</h3>
+          <p>For more detailed information about the API, you can refer to the javadocs: <a href="https://danutibeabasi.github.io/Faircorp-Web-Main/">Here</a>.</p>
+         </section>
+         <section class="js-section">
+          <h3 class="section__title">Example</h3>
+          <p>Here is an example of how to create a new building using the POST /api/buildings</p>
+          <ol>
+            <li>Open your REST client</li>
+            <li>Set the request method to POST</li>
+            <pre class="code code--block">
+              <code>
+                $ faircorp  ——POST
+                  {
+                    "id": 1,
+                    "name": "Building 1",
+                    "floors": [
+                      {
+                        "id": 1,
+                        "name": "Floor 1",
+                        "rooms": [
+                          {
+                            "id": 1,
+                            "name": "Room 1",
+                            "currentTemperature": 20.0,
+                            "targetTemperature": 20.0,
+                            "heaters": [
+                              {
+                                "id": 1,
+                                "name": "Heater 1",
+                                "status": "ON"
+                              }
+                            ],
+                            "windows": [
+                              {
+                                "id": 1,
+                                "name": "Window 1",
+                                "status": "OPEN"
+                              }
+                            ]
+                          }
+              </code>
+            </pre>
+            <li>Set the request URL to the API endpoint followed by /api/buildings/{id}, replacing {id} with the ID of the building you want to retrieve</li>
+            <li>Set the Authorization header to include your username and password</li>
+            <li>Send the request</li>
+          </ol>
+          <p>If the request is successful, you will receive a response with a status code of 200 OK and a JSON object containing information about the building. If an error occurs, you will receive an appropriate status code and an error message.</p>
+         </section>
+
+      </article>
+    </div>
+
+    <footer class="footer">Faircorp Smart Building Management System <a href="" target="_blank" class="link link--light">Documentation</a>.</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="faircorp.js"></script>
+  </body>
+</html>
+
+
+<!-- <div class="code__block code__block--notabs">
+  <pre class="code code--block">
+    <code>
+      $ faircorp  ——config
+        {
+          “encryption”: true, 
+          “highlighting“: true,
+          “prettyTable”: false,
+          “font”: [“Helvetica”, “sans-serif”],
+          “folder”: “~/Desktop“
+        }
+    </code>
+  </pre>
+</div> -->
+

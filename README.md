@@ -84,7 +84,7 @@ There are currently no known issues with the project.
 
 ## Contact
 
-For any questions or assistance with the project, you can contact the maintainers at [EMAIL ADDRESS].
+For any questions or assistance with the project, you can contact the maintainers at [EMAIL ADDRESS](mailto:dautibeabasi@gmail.com).
 
 ## Built With
 
