@@ -55,8 +55,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// Declare a custom test task that runs the unit tests
-// only if there are committed changes in the codebase
+
 task unitTest(type: Test) {
 	useJUnitPlatform()
 	onlyIf {
@@ -64,6 +63,12 @@ task unitTest(type: Test) {
 		status.contains("src/main/java")
 	}
 }
+
+task integrationTest(type: Test) {
+	exclude '**/IntegrationTest*.class'
+	exclude '**/integration/**'
+}
+
 
 // Make the test task a dependency of the build task
 build.dependsOn unitTest

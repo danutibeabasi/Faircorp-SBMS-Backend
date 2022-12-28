@@ -103,6 +103,9 @@ public class Room {
 
     }
 
+    public Room(String s, int i, int i1, int i2) {
+    }
+
     /**
      * Returns the unique identifier for the room.
      *

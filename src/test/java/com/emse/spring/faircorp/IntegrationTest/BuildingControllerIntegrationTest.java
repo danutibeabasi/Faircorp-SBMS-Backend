@@ -1,55 +1,45 @@
-package com.emse.spring.faircorp.api.unittest;
+package com.emse.spring.faircorp.IntegrationTest;
 
-import com.emse.spring.faircorp.api.BuildingController;
 import com.emse.spring.faircorp.dao.BuildingDao;
-import com.emse.spring.faircorp.dao.HeaterDao;
-import com.emse.spring.faircorp.dao.RoomDao;
-import com.emse.spring.faircorp.dao.WindowDao;
 import com.emse.spring.faircorp.model.Building;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BuildingController.class)
-class BuildingControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+class BuildingControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private WindowDao windowDao;
-
-    @MockBean
-    private RoomDao roomDao;
-
-    @MockBean
-    private HeaterDao heaterDao;
-
-    @MockBean
+    @Autowired
     private BuildingDao buildingDao;
-
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    //should delete a building
     void shouldDeleteBuilding() throws Exception {
         Building building = new Building("Building 1");
-        given(buildingDao.findById(1L)).willReturn(java.util.Optional.of(building));
-        mockMvc.perform(delete("/api/buildings/1"))
+        buildingDao.save(building);
+        Long newBuildingId = building.getId();
+
+        mockMvc.perform(delete("/api/buildings/"+newBuildingId.toString()))
                 .andExpect(status().isOk());
 
+        Optional<Building> deletedBuilding = buildingDao.findById(newBuildingId);
+        Assertions.assertThat(deletedBuilding.isEmpty()).isTrue();
     }
 }
-
-
 

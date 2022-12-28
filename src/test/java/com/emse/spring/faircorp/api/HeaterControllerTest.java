@@ -1,4 +1,4 @@
-package com.emse.spring.faircorp.api.unittest;
+package com.emse.spring.faircorp.api;
 
 
 import com.emse.spring.faircorp.api.HeaterController;
