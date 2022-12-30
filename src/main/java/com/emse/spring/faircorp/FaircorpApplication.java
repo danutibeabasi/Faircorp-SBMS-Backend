@@ -2,6 +2,8 @@ package com.emse.spring.faircorp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The main application class for the Faircorp project.
@@ -9,13 +11,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * This class is used to launch the Spring Boot application and configure
  * the necessary components for the project. It is annotated with the
  * `@SpringBootApplication` annotation, which enables several key features
- * of the Spring Boot framework, including component scanning, auto-configuration,
+ * of the Spring Boot framework, including component scanning, autoconfiguration,
  * and property support.
  * <p>
  * To run the application, simply execute the `main` method in this class.
  */
 @SpringBootApplication
 public class FaircorpApplication {
+
+
+	private static final Logger logger = LogManager.getLogger(FaircorpApplication.class);
+
 
 	/**
 	 * The main entry point for the application.
@@ -27,6 +33,9 @@ public class FaircorpApplication {
 	 * and configure all the necessary components.
 	 */
 	public static void main(String[] args) {
+		logger.info("This is an info message");
+		logger.error("This is an error message");
+
 		SpringApplication.run(FaircorpApplication.class,args);
 	}
 
