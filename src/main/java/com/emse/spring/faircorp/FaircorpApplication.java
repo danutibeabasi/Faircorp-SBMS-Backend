@@ -2,8 +2,6 @@ package com.emse.spring.faircorp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The main application class for the Faircorp project.
@@ -20,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 public class FaircorpApplication {
 
 
-	private static final Logger logger = LogManager.getLogger(FaircorpApplication.class);
+
 
 
 	/**
@@ -33,8 +31,7 @@ public class FaircorpApplication {
 	 * and configure all the necessary components.
 	 */
 	public static void main(String[] args) {
-		logger.info("This is an info message");
-		logger.error("This is an error message");
+
 
 		SpringApplication.run(FaircorpApplication.class,args);
 	}
