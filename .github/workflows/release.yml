@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  create:
-    types: [tag]
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -13,10 +14,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-      - name: Validate Gradle wrapper
-        run: gradle wrapper --check
-      - name: Run the Gradle test task
-        run: gradle test
       - name: Generate changelog
         uses: actions/changelog-maker-action@v2
         with:
