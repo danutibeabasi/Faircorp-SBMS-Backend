@@ -1,0 +1,19 @@
+
+version: '3.7'
+services:
+  vue:
+    build:
+      context: https://github.com/danutibeabasi/Faircorp-VueJs.git
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+  spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=password
