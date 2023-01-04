@@ -15,13 +15,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Generate changelog
-        uses: actions/changelog-maker-action@v2
-        with:
-          tag_from: ${{ github.ref }}
-          tag_to: ${{ github.base_ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output_file: CHANGELOG.md
-          title: Changelog
+        run: |
+          npm install -g conventional-changelog-cli
+          conventional-changelog -p angular -i CHANGELOG.md -s
       - name: Create release
         if: success()
         uses: actions/create-release@v1
