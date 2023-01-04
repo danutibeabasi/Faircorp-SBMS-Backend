@@ -1,4 +1,4 @@
-# Faircorp Smart Building
+# Faircorp Smart Building Management System
 
 A backend project built with a spring framework to handle a smart building and all of its entities, including rooms with heaters and windows within them. It also enables the administrator to manage users and assign roles and access to them in the system.
 
